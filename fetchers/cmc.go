@@ -1,8 +1,8 @@
 package fetchers
 
 import (
-	"../model"
 	"encoding/json"
+	"github.com/NazarNintendo/cryptobot/model"
 	"log"
 	"net/http"
 	"os"

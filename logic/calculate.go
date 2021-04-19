@@ -1,12 +1,12 @@
 package logic
 
 import (
-	"../model"
+	"github.com/NazarNintendo/cryptobot/model"
 	"log"
 	"strconv"
 )
 
-func formatCrypto(exchangeRateUSD model.ExchangeRate, currency model.Currency, historicalQuotes []model.CryptoQuote, aggregationCounter int) model.Crypto {
+func formatCrypto(exchangeRateUSD model.ExchangeRate, currency model.Currency) model.Crypto {
 	priceInUSD := currency.Quote.USD.Price
 
 	rateUAHtoUSD, err := strconv.ParseFloat(exchangeRateUSD.Sale, 64)
@@ -23,11 +23,11 @@ func formatCrypto(exchangeRateUSD model.ExchangeRate, currency model.Currency, h
 		PercentChange24H: currency.Quote.USD.PercentChange24H,
 	}
 
-	baseAggregator := BaseAggregator{aggregationCounter, historicalQuotes}
+	//baseAggregator := BaseAggregator{aggregationCounter, historicalQuotes}
 
-	Aggregate(Aggregator10M{baseAggregator}, &crypto)
-	Aggregate(Aggregator1H{baseAggregator}, &crypto)
-	Aggregate(Aggregator2H{baseAggregator}, &crypto)
+	//Aggregate(Aggregator10M{baseAggregator}, &crypto)
+	//Aggregate(Aggregator1H{baseAggregator}, &crypto)
+	//Aggregate(Aggregator2H{baseAggregator}, &crypto)
 
 	return crypto
 }

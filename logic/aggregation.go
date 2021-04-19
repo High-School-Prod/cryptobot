@@ -1,7 +1,7 @@
 package logic
 
 import (
-	"../model"
+	"github.com/NazarNintendo/cryptobot/model"
 )
 
 type Aggregator interface {

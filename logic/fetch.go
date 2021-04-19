@@ -1,10 +1,9 @@
 package logic
 
 import (
-	"../bot"
-	"../fetchers"
-	"../model"
-	"fmt"
+	"github.com/NazarNintendo/cryptobot/bot"
+	"github.com/NazarNintendo/cryptobot/fetchers"
+	"github.com/NazarNintendo/cryptobot/model"
 	"sync"
 	"time"
 )
@@ -14,11 +13,11 @@ var quotes = make(chan model.CryptoQuote)
 
 func Run() {
 
-	historicalQuotes := make([]model.CryptoQuote, 72)
+	//historicalQuotes := make([]model.CryptoQuote, 72)
 
 	go bot.CreateBot()
 
-	aggregationCounter := 0
+	aggregationCounter := 1
 
 	for {
 		var waitGroup sync.WaitGroup
@@ -33,31 +32,20 @@ func Run() {
 
 			var cryptos []model.Crypto
 
-			cryptos = append(cryptos, formatCrypto(exchangeRateUSD, quote.Data.BTC, historicalQuotes, aggregationCounter))
-			cryptos = append(cryptos, formatCrypto(exchangeRateUSD, quote.Data.DOGE, historicalQuotes, aggregationCounter))
+			cryptos = append(cryptos, formatCrypto(exchangeRateUSD, quote.Data.BTC))
+			cryptos = append(cryptos, formatCrypto(exchangeRateUSD, quote.Data.DOGE))
 
-			var message string
+			bot.NotifyClients(aggregationCounter, cryptos)
 
-			for _, crypto := range cryptos {
-				message += crypto.String()
-			}
-
-			currentTime := time.Now().Format("Mon Jan _2 15:04:05 MST 2006")
-			message += fmt.Sprintf("<i>%v</i>\n", currentTime)
-
-			if aggregationCounter == 71 {
-				bot.SendEvent(message)
-			}
-
-			historicalQuotes[aggregationCounter] = quote
+			//historicalQuotes[aggregationCounter] = quote
 
 			waitGroup.Done()
 		}()
 
 		waitGroup.Wait()
 
-		if aggregationCounter == 71 {
-			aggregationCounter = 0
+		if aggregationCounter == 144 {
+			aggregationCounter = 1
 		} else {
 			aggregationCounter++
 		}

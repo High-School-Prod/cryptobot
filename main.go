@@ -1,7 +1,7 @@
 package main
 
 import (
-	"./logic"
+	"github.com/NazarNintendo/cryptobot/logic"
 	"github.com/joho/godotenv"
 	"log"
 )

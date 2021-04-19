@@ -1,8 +1,8 @@
 package fetchers
 
 import (
-	"../model"
 	"fmt"
+	"github.com/NazarNintendo/cryptobot/model"
 	"log"
 	"strconv"
 	"sync"
